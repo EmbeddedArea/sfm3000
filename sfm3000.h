@@ -21,11 +21,11 @@
 #include <stdint.h>
 #include "i2c.h" // Related HAL Library for I2C Peripheral
 
-#define SFM3000_I2C_INS								&hi2c2 			// Address of I2C HAL Instance
+#define SFM3000_I2C_INS							&hi2c2 			// Address of I2C HAL Instance
 #define SFM3000_I2C_ADDRESS 						0x40<<1			// Device I2C Address
-#define TRANSMISSON_TIMEOUT_PARAMETER 				0xFF			// Timeout parameter of write and read functions
-#define SFM3000_OFFSET_PARAMETER					(float) 32000.0 // Offset flow value from the datasheet
-#define SFM3000_SCALE_PARAMETER 					(float) 140.0   // Scale factor flow value of air from the datasheet
+#define TRANSMISSON_TIMEOUT_PARAMETER 					0xFF			// Timeout parameter of write and read functions
+#define SFM3000_OFFSET_PARAMETER					(float) 32000.0 	// Offset flow value from the datasheet
+#define SFM3000_SCALE_PARAMETER 					(float) 140.0   	// Scale factor flow value of air from the datasheet
 
 //#define CRC_ON //Comment out to enable CRC on receive
 
@@ -41,8 +41,8 @@ enum SFM3000_COMMANDS {
 	READ_FLOW_DATA_BYTE_2 = 0x00,
 	READ_SERIAL_ID_BYTE_1 = 0x31,
 	READ_SERIAL_ID_BYTE_2 = 0xAE,
-	SOFT_RESET_BYTE_1 	  = 0x20,
-	SOFT_RESET_BYTE_2 	  = 0x00
+	SOFT_RESET_BYTE_1     = 0x20,
+	SOFT_RESET_BYTE_2     = 0x00
 };
 
 uint8_t sfm3000init(void);
