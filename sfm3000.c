@@ -1,17 +1,53 @@
-/*
- *      sfm3000.c - Source file for SFM3000 Mass Flow Sensor 
- *
- *	    Author: EmbeddedArea (embeddedarea.com)
- *   
+/**
+ ********************************************************************************
+ * @file    sfm3000.c - Source file for SFM3000 Mass Flow Sensor
+ * @author  EmbeddedArea (embeddedarea.com)
+ * @date    May 5, 2020
+ * @brief
+ ********************************************************************************
  */
+
+/************************************
+ * INCLUDES
+ ************************************/
 #include "sfm3000.h"
 
+/************************************
+ * EXTERN VARIABLES
+ ************************************/
+
+/************************************
+ * PRIVATE MACROS AND DEFINES
+ ************************************/
+
+/************************************
+ * PRIVATE TYPEDEFS
+ ************************************/
+
+/************************************
+ * STATIC VARIABLES
+ ************************************/
+
+/************************************
+ * GLOBAL VARIABLES
+ ************************************/
 const uint32_t timeoutParam = TRANSMISSON_TIMEOUT_PARAMETER;
 
+/************************************
+ * STATIC FUNCTION PROTOTYPES
+ ************************************/
 
-/*
- *  Initiates the data reading from the sensor, sends the two byte command to start continuous measurement.
- *
+/************************************
+ * STATIC FUNCTIONS
+ ************************************/
+
+/************************************
+ * GLOBAL FUNCTIONS
+ ************************************/
+
+/**
+ * @brief Initiates the data reading from the sensor, sends the two byte command to start continuous measurement.
+ * @return
  */
 uint8_t sfm3000init(void){
 	uint8_t Buffer[SFM3000_DEVICE_I2C_COMMAND_SIZE];
@@ -21,10 +57,13 @@ uint8_t sfm3000init(void){
 }
 
 
-/*
- *	Reads the data, after the sfm3000init() which starts the continuous measurement. Offset and scale values
- *	for the air defined as  SFM3000_OFFSET_PARAMETER and SFM3000_SCALE_PARAMETER in .h file with respect to datasheet.
- *
+/**
+ * @brief Reads the data, after the sfm3000init() which starts the continuous measurement. Offset and scale values
+ * for the air defined as  SFM3000_OFFSET_PARAMETER and SFM3000_SCALE_PARAMETER in .h file with respect to datasheet.
+ * @param offset
+ * @param scale
+ * @param Status
+ * @return
  */
 float sfm3000getValue(float offset, float scale, uint8_t * Status){
 	uint8_t Buffer[3] = {0};
@@ -41,9 +80,9 @@ float sfm3000getValue(float offset, float scale, uint8_t * Status){
 }
 
 
-/*
- *	Initiates soft reset to the sensor, sends the two byte command to reset.
- *
+/**
+ * @brief Initiates soft reset to the sensor, sends the two byte command to reset.
+ * @return
  */
 uint8_t sfm3000reset(void){
 	uint8_t Buffer[SFM3000_DEVICE_I2C_COMMAND_SIZE];
@@ -53,9 +92,9 @@ uint8_t sfm3000reset(void){
 }
 
 
-/*
- *	Calculates the CRC byte with respect to input.
- *
+/**
+ * @brief Calculates the CRC byte with respect to input.
+ * @return
  */
 uint32_t sfm3000readSerialDevId(void){
 	uint8_t Buffer[SFM3000_SERIAL_ID_SIZE];
@@ -70,15 +109,17 @@ uint32_t sfm3000readSerialDevId(void){
 		else
 			return HAL_ERROR;
 #endif
-			return ((Buffer[0] << 24) | (Buffer[1] << 16) | (Buffer[3] << 8) | (Buffer[4]));
+		return ((Buffer[0] << 24) | (Buffer[1] << 16) | (Buffer[3] << 8) | (Buffer[4]));
 	}
 	return HAL_ERROR;
 }
 
 
-/*
- *	Calculates the CRC byte with respect to input.
- *
+/**
+ * @brief Calculates the CRC byte with respect to input.
+ * @param data
+ * @param crc
+ * @return
  */
 uint8_t sfm3000crc8(const uint8_t data, uint8_t crc){
 	crc ^= data;
@@ -88,9 +129,12 @@ uint8_t sfm3000crc8(const uint8_t data, uint8_t crc){
 }
 
 
-/*
- *	Checks the response from the sensor with respect to CRC.
- *
+/**
+ * @brief Checks the response from the sensor with respect to CRC.
+ * @param in1
+ * @param in2
+ * @param crcRead
+ * @return
  */
 uint8_t sfm3000crcCheck(uint8_t in1, uint8_t in2, uint8_t crcRead){
 	uint8_t crcTemp = 0xFF;
